@@ -1,0 +1,4388 @@
+{
+	"info": {
+		"_postman_id": "e0b2bf3b-5fa3-463b-809c-6b1bd58f183a",
+		"name": "Project_EMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30271140"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "register_admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":123456\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/auth/register/admin",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"auth",
+										"register",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "admin_login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"var token = jsonData['token'];\r",
+											"pm.environment.set(\"Authorization\", jsonData.token)\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":1234567\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/auth/login",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "admin_update_pass",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"oldPassword\":123456,\r\n    \"newPassword\":1234567\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/auth/update-password",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"auth",
+										"update-password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "batch",
+					"item": [
+						{
+							"name": "create_batch",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjEsInN1YiI6ImFiY2RAZ21haWwuY29tIiwiaWF0IjoxNjk3MDAyNjExLCJleHAiOjE2OTcwMDQwNTF9.aavjMn-mpufLTG6XvNh1FmUDJ7hAXPMYRLB113eXkxs",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchName\": \"python\",\r\n    \"description\": \"\",\r\n    \"startDate\": \"2023/09/23\",\r\n    \"endDate\": \"2023/10/25\",\r\n    \"status\": \"\",\r\n    \"userIds\": [4]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/batch",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_batch",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchName\": \"SQA\",\r\n    \"description\": \"\",\r\n    \"startDate\": \"2023/09/23\",\r\n    \"endDate\": \"2023/10/25\",\r\n    \"status\": \"\",\r\n    \"userIds\": [12]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/batch/3",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_batches",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/batch",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_batch",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjEsInN1YiI6ImFiY2RAZ21haWwuY29tIiwiaWF0IjoxNjk2OTk2ODUyLCJleHAiOjE2OTY5OTgyOTJ9.LBOzLNQVIQrkVnAy3G5IIoBhWeUKvGCvKRI0zs351VM",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{ems_url}}/batch/2",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_batchByUserID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/batch/user/5",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch",
+										"user",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete_batch",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/batch/6",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch",
+										"6"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "get_user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/user/3",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"user",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_userCount",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/user/count",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"user",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_userQuery",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/user?userType=admin",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"user"
+									],
+									"query": [
+										{
+											"key": "userType",
+											"value": "admin"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "fullName",
+											"value": "mahmud iftekhar asef b",
+											"type": "text"
+										},
+										{
+											"key": "contactNo",
+											"value": "01729292929",
+											"type": "text"
+										},
+										{
+											"key": "dob",
+											"value": "1999/10/20",
+											"type": "text"
+										},
+										{
+											"key": "educationalInstitute",
+											"value": "AIUB",
+											"type": "text"
+										},
+										{
+											"key": "degreeName",
+											"value": "CSE",
+											"type": "text"
+										},
+										{
+											"key": "passingYear",
+											"value": "2023",
+											"type": "text"
+										},
+										{
+											"key": "cgpa",
+											"value": "3.86",
+											"type": "text"
+										},
+										{
+											"key": "designation",
+											"value": "SQA eng",
+											"type": "text"
+										},
+										{
+											"key": "expertise",
+											"value": "API",
+											"type": "text"
+										},
+										{
+											"key": "joiningDate",
+											"value": "2023/10/12",
+											"type": "text"
+										},
+										{
+											"key": "presentAddress",
+											"value": "dhaka",
+											"type": "text"
+										},
+										{
+											"key": "profilePictureId",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ems_url}}/user/4",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"user",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "task",
+					"item": [
+						{
+							"name": "create_task",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "assignedBy",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "batchId",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "sqa basic",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "practice",
+											"type": "text"
+										},
+										{
+											"key": "taskType",
+											"value": "FINAL_PROJCET",
+											"type": "text"
+										},
+										{
+											"key": "submissionDate",
+											"value": "2023/10/11",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ems_url}}/task",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_task Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "assignedBy",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "batchId",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "sqa basic api",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "practice",
+											"type": "text"
+										},
+										{
+											"key": "taskType",
+											"value": "DAILY_TASK",
+											"type": "text"
+										},
+										{
+											"key": "submissionDate",
+											"value": "2023/10/11",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ems_url}}/task/52",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"52"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_task",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/task/52",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"52"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_tasks",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/task?batchId=2&taskType=DAILY_TASK",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task"
+									],
+									"query": [
+										{
+											"key": "batchId",
+											"value": "2"
+										},
+										{
+											"key": "taskType",
+											"value": "DAILY_TASK"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "submit_task",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "taskId",
+											"value": "52",
+											"type": "text"
+										},
+										{
+											"key": "traineeId",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ems_url}}/task/submit",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"submit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_submissionByID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/task/submission/152",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"submission",
+										"152"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_submissionByTaskID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/task/submission/task/52",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"submission",
+										"task",
+										"52"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "evaluation",
+					"item": [
+						{
+							"name": "create_task_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchId\": 7,\r\n    \"traineeId\": 4,\r\n    \"evaluatorId\": 2,\r\n    \"taskId\": \"55\",\r\n    \"obtainedMark\": 22,\r\n    \"requirementUnderstanding\": 5,\r\n    \"expectedOutput\": 5,\r\n    \"codeQuality\": 10,\r\n    \"demonstrationOrPresentation\": 4,\r\n    \"liveCodingOrCodeUnderstanding\": 4,\r\n    \"taskType\": \"FINAL_PROJECT\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_task_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"evaluatorId\": 2,\r\n  \"taskId\": 52,\r\n  \"obtainedMark\": 100,\r\n  \"requirementUnderstanding\": 10,\r\n  \"expectedOutput\": 10,\r\n  \"codeQuality\": 10,\r\n  \"demonstrationOrPresentation\": 10,\r\n  \"liveCodingOrCodeUnderstanding\": 10,\r\n  \"taskType\": \"DAILY_TASK\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/204",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"204"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_final_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchId\": 7,\r\n    \"srs\": 10,\r\n    \"wbs\": 5,\r\n    \"designDocument\": 5,\r\n    \"ppt\": 5,\r\n    \"traineeId\": 4,\r\n    \"evaluatorId\": 2,\r\n    \"evaluatedOn\":\"merit\",\r\n    \"totalMark\": 50,\r\n    \"obtainedMark\": 47,\r\n    \"requirementUnderstanding\": 5,\r\n    \"expectedOutput\": 5,\r\n    \"codeQuality\": 4,\r\n    \"demonstrationOrPresentation\": 4,\r\n    \"liveCodingOrCodeUnderstanding\": 4\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/final-project",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"final-project"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_final_evaluation_validation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchId\": \"\",\r\n    \"srs\": \"\",\r\n    \"wbs\": \"\",\r\n    \"designDocument\": \"\",\r\n    \"ppt\": \"\",\r\n    \"traineeId\": \"\",\r\n    \"evaluatorId\": \"\",\r\n    \"evaluatedOn\":\"\",\r\n    \"totalMark\": \"\",\r\n    \"obtainedMark\": \"\",\r\n    \"requirementUnderstanding\": \"\",\r\n    \"expectedOutput\": \"\",\r\n    \"codeQuality\": \"\",\r\n    \"demonstrationOrPresentation\": \"\",\r\n    \"liveCodingOrCodeUnderstanding\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/final-project",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"final-project"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_final_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchId\": 2,\r\n    \"srs\": 10,\r\n    \"wbs\": 5,\r\n    \"designDocument\": 5,\r\n    \"ppt\": 5,\r\n    \"traineeId\": 3,\r\n    \"evaluatorId\": 2,\r\n    \"evaluatedOn\":\"merit\",\r\n    \"totalMark\": 50,\r\n    \"obtainedMark\": 49,\r\n    \"requirementUnderstanding\": 5,\r\n    \"expectedOutput\": 5,\r\n    \"codeQuality\": 4,\r\n    \"demonstrationOrPresentation\": 5,\r\n    \"liveCodingOrCodeUnderstanding\": 5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/final-project/252",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"final-project",
+										"252"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_hr_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1,\r\n    \"traineeId\": 4,\r\n    \"batchId\": 7,\r\n    \"hrInterviewMark\": 2,\r\n    \"totalMark\": 50,\r\n    \"obtainedMark\": 47\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/ceo",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"ceo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_hr_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1,\r\n    \"traineeId\": 3,\r\n    \"batchId\": 2,\r\n    \"hrInterviewMark\": 2,\r\n    \"totalMark\": 50,\r\n    \"obtainedMark\": 49\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/ceo/302",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"ceo",
+										"302"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_managers_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"traineeId\": 4,\r\n    \"batchId\": 7,\r\n    \"obtainedMark\": 85,\r\n    \"bjitTools\": 5,\r\n    \"officeRules\": 5,\r\n    \"sincerity\": 5,\r\n    \"quality\": 5,\r\n    \"attendance\": 10,\r\n    \"communicationSkill\": 10,\r\n    \"englishLanguageSkill\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/manager",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"manager"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_managers_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"traineeId\": 3,\r\n    \"batchId\": 2,\r\n    \"obtainedMark\": 85,\r\n    \"bjitTools\": 5,\r\n    \"officeRules\": 5,\r\n    \"sincerity\": 5,\r\n    \"quality\": 5,\r\n    \"attendance\": 10,\r\n    \"communicationSkill\": 10,\r\n    \"englishLanguageSkill\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/manager/352",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"manager",
+										"352"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/evaluation?batchId=2",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation"
+									],
+									"query": [
+										{
+											"key": "batchId",
+											"value": "2"
+										},
+										{
+											"key": "taskType",
+											"value": "MANAGERS",
+											"disabled": true
+										},
+										{
+											"key": "taskType",
+											"value": "CEO",
+											"disabled": true
+										},
+										{
+											"key": "taskType",
+											"value": "FINAL_PROJECT",
+											"disabled": true
+										},
+										{
+											"key": "taskType",
+											"value": "DAILY_TASK",
+											"disabled": true
+										},
+										{
+											"key": "taskType",
+											"value": "MID_PROJECT",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "score",
+					"item": [
+						{
+							"name": "add_remarks",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"trainerId\": \"2\",\r\n  \"trainerName\": \"musfiqur\",\r\n  \"message\": \"very good\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/final-score/feedback/402",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"final-score",
+										"feedback",
+										"402"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_remarks",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"trainerId\": \"2\",\r\n  \"trainerName\": \"musfiqur\",\r\n  \"message\": \"very good\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/final-score/feedback/452?message=\"good\"",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"final-score",
+										"feedback",
+										"452"
+									],
+									"query": [
+										{
+											"key": "message",
+											"value": "\"good\""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "generate_score",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/final-score/3?recalculate=true",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"final-score",
+										"3"
+									],
+									"query": [
+										{
+											"key": "recalculate",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_score",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/final-score",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"final-score"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "weight",
+					"item": [
+						{
+							"name": "get_weight",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/weight",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"weight"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_weight",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"dailyTaskEvaluationWeightage\": 10,\r\n  \"miniProjectEvaluationWeightage\": 20,\r\n  \"midProjectEvaluationWeightage\": 50,\r\n  \"finalProjectEvaluationWeightage\": 30,\r\n  \"domainWeightage\": 30,\r\n  \"managerEvaluationWeightage\": 15,\r\n  \"trainingWeightage\": 67,\r\n  \"hrInterviewEvaluationWeightage\": 33\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/weight",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"weight"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "trainer",
+			"item": [
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "register_trainer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n     \"email\":\"trainer@gmail.com\",\r\n    \"password\":123456\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/auth/register/trainer",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"auth",
+										"register",
+										"trainer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trainer_login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"var token = jsonData['token'];\r",
+											"pm.environment.set(\"Authorization\", jsonData.token)\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"trainer@gmail.com\",\r\n    \"password\":1234567\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/auth/login",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trainer_update_pass",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"trainer@gmail.com\",\r\n    \"oldPassword\":123456,\r\n    \"newPassword\":1234567\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/auth/update-password",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"auth",
+										"update-password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "batch",
+					"item": [
+						{
+							"name": "create_batch",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjEsInN1YiI6ImFiY2RAZ21haWwuY29tIiwiaWF0IjoxNjk3MDAyNjExLCJleHAiOjE2OTcwMDQwNTF9.aavjMn-mpufLTG6XvNh1FmUDJ7hAXPMYRLB113eXkxs",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchName\": \"python\",\r\n    \"description\": \"\",\r\n    \"startDate\": \"2023/09/23\",\r\n    \"endDate\": \"2023/10/25\",\r\n    \"status\": \"\",\r\n    \"userIds\": [4]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/batch",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_batch",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchName\": \"java\",\r\n    \"description\": \"\",\r\n    \"startDate\": \"2023/09/23\",\r\n    \"endDate\": \"2023/10/25\",\r\n    \"status\": \"\",\r\n    \"userIds\": [3]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/batch/2",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_batches",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/batch",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_batch",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjEsInN1YiI6ImFiY2RAZ21haWwuY29tIiwiaWF0IjoxNjk2OTk2ODUyLCJleHAiOjE2OTY5OTgyOTJ9.LBOzLNQVIQrkVnAy3G5IIoBhWeUKvGCvKRI0zs351VM",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{ems_url}}/batch/2",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_batchByUserID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/batch/user/2",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch",
+										"user",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete_batch",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/batch/4",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "get_user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/user/2",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"user",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_userCount",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/user/count",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"user",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_userQuery",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/user?userType=admin",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"user"
+									],
+									"query": [
+										{
+											"key": "userType",
+											"value": "admin"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "fullName",
+											"value": "mahmud iftekhar asef b",
+											"type": "text"
+										},
+										{
+											"key": "contactNo",
+											"value": "01729292929",
+											"type": "text"
+										},
+										{
+											"key": "dob",
+											"value": "1999/10/20",
+											"type": "text"
+										},
+										{
+											"key": "educationalInstitute",
+											"value": "AIUB",
+											"type": "text"
+										},
+										{
+											"key": "degreeName",
+											"value": "CSE",
+											"type": "text"
+										},
+										{
+											"key": "passingYear",
+											"value": "2023",
+											"type": "text"
+										},
+										{
+											"key": "cgpa",
+											"value": "3.86",
+											"type": "text"
+										},
+										{
+											"key": "designation",
+											"value": "SQA eng",
+											"type": "text"
+										},
+										{
+											"key": "expertise",
+											"value": "API",
+											"type": "text"
+										},
+										{
+											"key": "joiningDate",
+											"value": "2023/10/12",
+											"type": "text"
+										},
+										{
+											"key": "presentAddress",
+											"value": "dhaka",
+											"type": "text"
+										},
+										{
+											"key": "profilePictureId",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ems_url}}/user/4",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"user",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "task",
+					"item": [
+						{
+							"name": "create_task",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "assignedBy",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "batchId",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "sqa basic",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "practice",
+											"type": "text"
+										},
+										{
+											"key": "taskType",
+											"value": "FINAL_PROJCET",
+											"type": "text"
+										},
+										{
+											"key": "submissionDate",
+											"value": "2023/10/11",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ems_url}}/task",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_task Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "assignedBy",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "batchId",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "sqa basic api",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "practice",
+											"type": "text"
+										},
+										{
+											"key": "taskType",
+											"value": "DAILY_TASK",
+											"type": "text"
+										},
+										{
+											"key": "submissionDate",
+											"value": "2023/10/11",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ems_url}}/task/52",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"52"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_task",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/task/52",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"52"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_tasks",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/task?batchId=2&taskType=DAILY_TASK",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task"
+									],
+									"query": [
+										{
+											"key": "batchId",
+											"value": "2"
+										},
+										{
+											"key": "taskType",
+											"value": "DAILY_TASK"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "submit_task",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "taskId",
+											"value": "52",
+											"type": "text"
+										},
+										{
+											"key": "traineeId",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ems_url}}/task/submit",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"submit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_submissionByID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/task/submission/152",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"submission",
+										"152"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_submissionByTaskID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/task/submission/task/52",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"submission",
+										"task",
+										"52"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "evaluation",
+					"item": [
+						{
+							"name": "create_task_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchId\": 7,\r\n    \"traineeId\": 4,\r\n    \"evaluatorId\": 2,\r\n    \"taskId\": \"55\",\r\n    \"obtainedMark\": 22,\r\n    \"requirementUnderstanding\": 5,\r\n    \"expectedOutput\": 5,\r\n    \"codeQuality\": 10,\r\n    \"demonstrationOrPresentation\": 4,\r\n    \"liveCodingOrCodeUnderstanding\": 4,\r\n    \"taskType\": \"FINAL_PROJECT\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_task_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"evaluatorId\": 2,\r\n  \"taskId\": 52,\r\n  \"obtainedMark\": 100,\r\n  \"requirementUnderstanding\": 10,\r\n  \"expectedOutput\": 10,\r\n  \"codeQuality\": 10,\r\n  \"demonstrationOrPresentation\": 10,\r\n  \"liveCodingOrCodeUnderstanding\": 10,\r\n  \"taskType\": \"DAILY_TASK\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/204",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"204"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_final_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchId\": 7,\r\n    \"srs\": 10,\r\n    \"wbs\": 5,\r\n    \"designDocument\": 5,\r\n    \"ppt\": 5,\r\n    \"traineeId\": 4,\r\n    \"evaluatorId\": 2,\r\n    \"evaluatedOn\":\"merit\",\r\n    \"totalMark\": 50,\r\n    \"obtainedMark\": 47,\r\n    \"requirementUnderstanding\": 5,\r\n    \"expectedOutput\": 5,\r\n    \"codeQuality\": 4,\r\n    \"demonstrationOrPresentation\": 4,\r\n    \"liveCodingOrCodeUnderstanding\": 4\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/final-project",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"final-project"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_final_evaluation_validation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchId\": \"\",\r\n    \"srs\": \"\",\r\n    \"wbs\": \"\",\r\n    \"designDocument\": \"\",\r\n    \"ppt\": \"\",\r\n    \"traineeId\": \"\",\r\n    \"evaluatorId\": \"\",\r\n    \"evaluatedOn\":\"\",\r\n    \"totalMark\": \"\",\r\n    \"obtainedMark\": \"\",\r\n    \"requirementUnderstanding\": \"\",\r\n    \"expectedOutput\": \"\",\r\n    \"codeQuality\": \"\",\r\n    \"demonstrationOrPresentation\": \"\",\r\n    \"liveCodingOrCodeUnderstanding\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/final-project",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"final-project"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_final_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchId\": 2,\r\n    \"srs\": 10,\r\n    \"wbs\": 5,\r\n    \"designDocument\": 5,\r\n    \"ppt\": 5,\r\n    \"traineeId\": 3,\r\n    \"evaluatorId\": 2,\r\n    \"evaluatedOn\":\"merit\",\r\n    \"totalMark\": 50,\r\n    \"obtainedMark\": 49,\r\n    \"requirementUnderstanding\": 5,\r\n    \"expectedOutput\": 5,\r\n    \"codeQuality\": 4,\r\n    \"demonstrationOrPresentation\": 5,\r\n    \"liveCodingOrCodeUnderstanding\": 5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/final-project/252",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"final-project",
+										"252"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_hr_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1,\r\n    \"traineeId\": 4,\r\n    \"batchId\": 7,\r\n    \"hrInterviewMark\": 2,\r\n    \"totalMark\": 50,\r\n    \"obtainedMark\": 47\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/ceo",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"ceo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_hr_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1,\r\n    \"traineeId\": 3,\r\n    \"batchId\": 2,\r\n    \"hrInterviewMark\": 2,\r\n    \"totalMark\": 50,\r\n    \"obtainedMark\": 49\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/ceo/302",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"ceo",
+										"302"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_managers_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"traineeId\": 4,\r\n    \"batchId\": 7,\r\n    \"obtainedMark\": 85,\r\n    \"bjitTools\": 5,\r\n    \"officeRules\": 5,\r\n    \"sincerity\": 5,\r\n    \"quality\": 5,\r\n    \"attendance\": 10,\r\n    \"communicationSkill\": 10,\r\n    \"englishLanguageSkill\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/manager",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"manager"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_managers_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"traineeId\": 3,\r\n    \"batchId\": 2,\r\n    \"obtainedMark\": 85,\r\n    \"bjitTools\": 5,\r\n    \"officeRules\": 5,\r\n    \"sincerity\": 5,\r\n    \"quality\": 5,\r\n    \"attendance\": 10,\r\n    \"communicationSkill\": 10,\r\n    \"englishLanguageSkill\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/manager/352",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"manager",
+										"352"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/evaluation?batchId=2",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation"
+									],
+									"query": [
+										{
+											"key": "batchId",
+											"value": "2"
+										},
+										{
+											"key": "taskType",
+											"value": "MANAGERS",
+											"disabled": true
+										},
+										{
+											"key": "taskType",
+											"value": "CEO",
+											"disabled": true
+										},
+										{
+											"key": "taskType",
+											"value": "FINAL_PROJECT",
+											"disabled": true
+										},
+										{
+											"key": "taskType",
+											"value": "DAILY_TASK",
+											"disabled": true
+										},
+										{
+											"key": "taskType",
+											"value": "MID_PROJECT",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "score",
+					"item": [
+						{
+							"name": "add_remarks",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"trainerId\": \"2\",\r\n  \"trainerName\": \"musfiqur\",\r\n  \"message\": \"very good\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/final-score/feedback/1",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"final-score",
+										"feedback",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_remarks",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"trainerId\": \"2\",\r\n  \"trainerName\": \"musfiqur\",\r\n  \"message\": \"very good\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/final-score/feedback/1?message=\"good\"",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"final-score",
+										"feedback",
+										"1"
+									],
+									"query": [
+										{
+											"key": "message",
+											"value": "\"good\""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "generate_score",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/final-score/3?recalculate=true",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"final-score",
+										"3"
+									],
+									"query": [
+										{
+											"key": "recalculate",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_score",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/final-score",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"final-score"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "weight",
+					"item": [
+						{
+							"name": "get_weight",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/weight",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"weight"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_weight",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"dailyTaskEvaluationWeightage\": 10,\r\n  \"miniProjectEvaluationWeightage\": 20,\r\n  \"midProjectEvaluationWeightage\": 50,\r\n  \"finalProjectEvaluationWeightage\": 30,\r\n  \"domainWeightage\": 30,\r\n  \"managerEvaluationWeightage\": 15,\r\n  \"trainingWeightage\": 67,\r\n  \"hrInterviewEvaluationWeightage\": 33\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/weight",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"weight"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "trainee",
+			"item": [
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "register_trainee",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n     \"email\":\"trainee4@gmail.com\",\r\n    \"password\":123456\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/auth/register/trainee",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"auth",
+										"register",
+										"trainee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trainee_login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"var token = jsonData['token'];\r",
+											"pm.environment.set(\"Authorization\", jsonData.token)\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"trainee@gmail.com\",\r\n    \"password\":123456\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/auth/login",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trainee_update_pass",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"trainee@gmail.com\",\r\n    \"oldPassword\":123456,\r\n    \"newPassword\":1234567\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/auth/update-password",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"auth",
+										"update-password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "batch",
+					"item": [
+						{
+							"name": "create_batch",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjEsInN1YiI6ImFiY2RAZ21haWwuY29tIiwiaWF0IjoxNjk3MDAyNjExLCJleHAiOjE2OTcwMDQwNTF9.aavjMn-mpufLTG6XvNh1FmUDJ7hAXPMYRLB113eXkxs",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchName\": \"python\",\r\n    \"description\": \"\",\r\n    \"startDate\": \"2023/09/23\",\r\n    \"endDate\": \"2023/10/25\",\r\n    \"status\": \"\",\r\n    \"userIds\": [4]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/batch",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_batch",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchName\": \"java\",\r\n    \"description\": \"\",\r\n    \"startDate\": \"2023/09/23\",\r\n    \"endDate\": \"2023/10/25\",\r\n    \"status\": \"\",\r\n    \"userIds\": [3]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/batch/2",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_batches",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/batch",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_batch",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjEsInN1YiI6ImFiY2RAZ21haWwuY29tIiwiaWF0IjoxNjk2OTk2ODUyLCJleHAiOjE2OTY5OTgyOTJ9.LBOzLNQVIQrkVnAy3G5IIoBhWeUKvGCvKRI0zs351VM",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{ems_url}}/batch/2",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_batchByUserID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/batch/user/2",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch",
+										"user",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete_batch",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/batch/4",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"batch",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "get_user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/user/2",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"user",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_userCount",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/user/count",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"user",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_userQuery",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/user?userType=admin",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"user"
+									],
+									"query": [
+										{
+											"key": "userType",
+											"value": "admin"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "fullName",
+											"value": "mahmud iftekhar asef b",
+											"type": "text"
+										},
+										{
+											"key": "contactNo",
+											"value": "01729292929",
+											"type": "text"
+										},
+										{
+											"key": "dob",
+											"value": "1999/10/20",
+											"type": "text"
+										},
+										{
+											"key": "educationalInstitute",
+											"value": "AIUB",
+											"type": "text"
+										},
+										{
+											"key": "degreeName",
+											"value": "CSE",
+											"type": "text"
+										},
+										{
+											"key": "passingYear",
+											"value": "2023",
+											"type": "text"
+										},
+										{
+											"key": "cgpa",
+											"value": "3.86",
+											"type": "text"
+										},
+										{
+											"key": "designation",
+											"value": "SQA eng",
+											"type": "text"
+										},
+										{
+											"key": "expertise",
+											"value": "API",
+											"type": "text"
+										},
+										{
+											"key": "joiningDate",
+											"value": "2023/10/12",
+											"type": "text"
+										},
+										{
+											"key": "presentAddress",
+											"value": "dhaka",
+											"type": "text"
+										},
+										{
+											"key": "profilePictureId",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ems_url}}/user/4",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"user",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "task",
+					"item": [
+						{
+							"name": "create_task",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "assignedBy",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "batchId",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "sqa basic",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "practice",
+											"type": "text"
+										},
+										{
+											"key": "taskType",
+											"value": "FINAL_PROJCET",
+											"type": "text"
+										},
+										{
+											"key": "submissionDate",
+											"value": "2023/10/11",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ems_url}}/task",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_task Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "assignedBy",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "batchId",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "sqa basic api",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "practice",
+											"type": "text"
+										},
+										{
+											"key": "taskType",
+											"value": "DAILY_TASK",
+											"type": "text"
+										},
+										{
+											"key": "submissionDate",
+											"value": "2023/10/11",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ems_url}}/task/52",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"52"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_task",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/task/52",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"52"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_tasks",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/task?batchId=2&taskType=DAILY_TASK",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task"
+									],
+									"query": [
+										{
+											"key": "batchId",
+											"value": "2"
+										},
+										{
+											"key": "taskType",
+											"value": "DAILY_TASK"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "submit_task",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "taskId",
+											"value": "52",
+											"type": "text"
+										},
+										{
+											"key": "traineeId",
+											"value": "4",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ems_url}}/task/submit",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"submit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_submissionByID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/task/submission/152",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"submission",
+										"152"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_submissionByTaskID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/task/submission/task/52",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"task",
+										"submission",
+										"task",
+										"52"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "evaluation",
+					"item": [
+						{
+							"name": "create_task_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchId\": 7,\r\n    \"traineeId\": 4,\r\n    \"evaluatorId\": 2,\r\n    \"taskId\": \"55\",\r\n    \"obtainedMark\": 22,\r\n    \"requirementUnderstanding\": 5,\r\n    \"expectedOutput\": 5,\r\n    \"codeQuality\": 10,\r\n    \"demonstrationOrPresentation\": 4,\r\n    \"liveCodingOrCodeUnderstanding\": 4,\r\n    \"taskType\": \"FINAL_PROJECT\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_task_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"evaluatorId\": 2,\r\n  \"taskId\": 52,\r\n  \"obtainedMark\": 100,\r\n  \"requirementUnderstanding\": 10,\r\n  \"expectedOutput\": 10,\r\n  \"codeQuality\": 10,\r\n  \"demonstrationOrPresentation\": 10,\r\n  \"liveCodingOrCodeUnderstanding\": 10,\r\n  \"taskType\": \"DAILY_TASK\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/204",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"204"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_final_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchId\": 7,\r\n    \"srs\": 10,\r\n    \"wbs\": 5,\r\n    \"designDocument\": 5,\r\n    \"ppt\": 5,\r\n    \"traineeId\": 4,\r\n    \"evaluatorId\": 2,\r\n    \"evaluatedOn\":\"merit\",\r\n    \"totalMark\": 50,\r\n    \"obtainedMark\": 47,\r\n    \"requirementUnderstanding\": 5,\r\n    \"expectedOutput\": 5,\r\n    \"codeQuality\": 4,\r\n    \"demonstrationOrPresentation\": 4,\r\n    \"liveCodingOrCodeUnderstanding\": 4\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/final-project",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"final-project"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_final_evaluation_validation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchId\": \"\",\r\n    \"srs\": \"\",\r\n    \"wbs\": \"\",\r\n    \"designDocument\": \"\",\r\n    \"ppt\": \"\",\r\n    \"traineeId\": \"\",\r\n    \"evaluatorId\": \"\",\r\n    \"evaluatedOn\":\"\",\r\n    \"totalMark\": \"\",\r\n    \"obtainedMark\": \"\",\r\n    \"requirementUnderstanding\": \"\",\r\n    \"expectedOutput\": \"\",\r\n    \"codeQuality\": \"\",\r\n    \"demonstrationOrPresentation\": \"\",\r\n    \"liveCodingOrCodeUnderstanding\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/final-project",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"final-project"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_final_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"batchId\": 2,\r\n    \"srs\": 10,\r\n    \"wbs\": 5,\r\n    \"designDocument\": 5,\r\n    \"ppt\": 5,\r\n    \"traineeId\": 3,\r\n    \"evaluatorId\": 2,\r\n    \"evaluatedOn\":\"merit\",\r\n    \"totalMark\": 50,\r\n    \"obtainedMark\": 49,\r\n    \"requirementUnderstanding\": 5,\r\n    \"expectedOutput\": 5,\r\n    \"codeQuality\": 4,\r\n    \"demonstrationOrPresentation\": 5,\r\n    \"liveCodingOrCodeUnderstanding\": 5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/final-project/252",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"final-project",
+										"252"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_hr_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1,\r\n    \"traineeId\": 4,\r\n    \"batchId\": 7,\r\n    \"hrInterviewMark\": 2,\r\n    \"totalMark\": 50,\r\n    \"obtainedMark\": 47\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/ceo",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"ceo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_hr_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1,\r\n    \"traineeId\": 3,\r\n    \"batchId\": 2,\r\n    \"hrInterviewMark\": 2,\r\n    \"totalMark\": 50,\r\n    \"obtainedMark\": 49\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/ceo/302",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"ceo",
+										"302"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_managers_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"traineeId\": 4,\r\n    \"batchId\": 7,\r\n    \"obtainedMark\": 85,\r\n    \"bjitTools\": 5,\r\n    \"officeRules\": 5,\r\n    \"sincerity\": 5,\r\n    \"quality\": 5,\r\n    \"attendance\": 10,\r\n    \"communicationSkill\": 10,\r\n    \"englishLanguageSkill\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/manager",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"manager"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_managers_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"traineeId\": 3,\r\n    \"batchId\": 2,\r\n    \"obtainedMark\": 85,\r\n    \"bjitTools\": 5,\r\n    \"officeRules\": 5,\r\n    \"sincerity\": 5,\r\n    \"quality\": 5,\r\n    \"attendance\": 10,\r\n    \"communicationSkill\": 10,\r\n    \"englishLanguageSkill\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/evaluation/manager/352",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation",
+										"manager",
+										"352"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_evaluation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/evaluation?batchId=2",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"evaluation"
+									],
+									"query": [
+										{
+											"key": "batchId",
+											"value": "2"
+										},
+										{
+											"key": "taskType",
+											"value": "MANAGERS",
+											"disabled": true
+										},
+										{
+											"key": "taskType",
+											"value": "CEO",
+											"disabled": true
+										},
+										{
+											"key": "taskType",
+											"value": "FINAL_PROJECT",
+											"disabled": true
+										},
+										{
+											"key": "taskType",
+											"value": "DAILY_TASK",
+											"disabled": true
+										},
+										{
+											"key": "taskType",
+											"value": "MID_PROJECT",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "score",
+					"item": [
+						{
+							"name": "add_remarks",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"trainerId\": \"2\",\r\n  \"trainerName\": \"musfiqur\",\r\n  \"message\": \"very good\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/final-score/feedback/1",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"final-score",
+										"feedback",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_remarks",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"trainerId\": \"2\",\r\n  \"trainerName\": \"musfiqur\",\r\n  \"message\": \"very good\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/final-score/feedback/1?message=\"good\"",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"final-score",
+										"feedback",
+										"1"
+									],
+									"query": [
+										{
+											"key": "message",
+											"value": "\"good\""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "generate_score",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/final-score/3?recalculate=true",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"final-score",
+										"3"
+									],
+									"query": [
+										{
+											"key": "recalculate",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_score",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/final-score",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"final-score"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "weight",
+					"item": [
+						{
+							"name": "get_weight",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ems_url}}/weight",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"weight"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_weight",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"dailyTaskEvaluationWeightage\": 10,\r\n  \"miniProjectEvaluationWeightage\": 20,\r\n  \"midProjectEvaluationWeightage\": 50,\r\n  \"finalProjectEvaluationWeightage\": 30,\r\n  \"domainWeightage\": 30,\r\n  \"managerEvaluationWeightage\": 15,\r\n  \"trainingWeightage\": 67,\r\n  \"hrInterviewEvaluationWeightage\": 33\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ems_url}}/weight",
+									"host": [
+										"{{ems_url}}"
+									],
+									"path": [
+										"weight"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{ems_url}}/auth/logout",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

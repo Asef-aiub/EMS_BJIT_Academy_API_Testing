@@ -1,0 +1,747 @@
+{
+	"info": {
+		"_postman_id": "ccbb1b55-c4bb-454b-bbb9-150cca49b999",
+		"name": "Project_EMS_Final_Collection_Run",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30271140"
+	},
+	"item": [
+		{
+			"name": "register_trainee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const email = `user${Math.floor(Math.random() * 10000)}@example.com`;\r",
+							"const password = `password${Math.floor(Math.random() * 10000)}`;\r",
+							"\r",
+							"pm.environment.set(\"email\", email);\r",
+							"pm.environment.set(\"password\", password);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ems_url}}/auth/register/trainee",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"auth",
+						"register",
+						"trainee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login_with_invalid_email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 406\", function () {\r",
+							"    pm.response.to.have.status(406);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ems_url}}/auth/login",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login_with_invalid_password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 406\", function () {\r",
+							"    pm.response.to.have.status(406);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"{{$randomPassword}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ems_url}}/auth/login",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login_admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"var token = jsonData['token'];\r",
+							"pm.environment.set(\"Authorization\", jsonData.token)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":1234567\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ems_url}}/auth/login",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_batches",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"var firstBatchId = jsonData[0].id;\r",
+							"pm.environment.set(\"selectedBatchId\", firstBatchId);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Authorization}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ems_url}}/batch",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"batch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_batchesById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Authorization}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ems_url}}/batch/{{selectedBatchId}}",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"batch",
+						"{{selectedBatchId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_batchesById_invalid_batchId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Authorization}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ems_url}}/batch/{{$randomInt}}",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"batch",
+						"{{$randomInt}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Authorization}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ems_url}}/task",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_weight",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Authorization}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"dailyTaskEvaluationWeightage\": 10,\r\n  \"miniProjectEvaluationWeightage\": 20,\r\n  \"midProjectEvaluationWeightage\": 50,\r\n  \"finalProjectEvaluationWeightage\": 30,\r\n  \"domainWeightage\": 30,\r\n  \"managerEvaluationWeightage\": 15,\r\n  \"trainingWeightage\": 67,\r\n  \"hrInterviewEvaluationWeightage\": 33\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ems_url}}/weight",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"weight"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_weight_null_value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Authorization}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"dailyTaskEvaluationWeightage\": null,\r\n  \"miniProjectEvaluationWeightage\": 20,\r\n  \"midProjectEvaluationWeightage\": \"\",\r\n  \"finalProjectEvaluationWeightage\": 30,\r\n  \"domainWeightage\": 30,\r\n  \"managerEvaluationWeightage\": 15,\r\n  \"trainingWeightage\": 67,\r\n  \"hrInterviewEvaluationWeightage\": 33\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ems_url}}/weight",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"weight"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_weight",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Authorization}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ems_url}}/weight",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"weight"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_evaluation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Authorization}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ems_url}}/evaluation?taskType={{taskType}}&batchId={{selectedBatchId}}",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"evaluation"
+					],
+					"query": [
+						{
+							"key": "taskType",
+							"value": "MANAGERS",
+							"disabled": true
+						},
+						{
+							"key": "taskType",
+							"value": "FINAL_PROJECT",
+							"disabled": true
+						},
+						{
+							"key": "taskType",
+							"value": "DAILY_TASK",
+							"disabled": true
+						},
+						{
+							"key": "taskType",
+							"value": "MID_PROJECT",
+							"disabled": true
+						},
+						{
+							"key": "taskType",
+							"value": "{{taskType}}"
+						},
+						{
+							"key": "batchId",
+							"value": "{{selectedBatchId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_evaluation_invalid_batchId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Authorization}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ems_url}}/evaluation?taskType={{taskType}}&batchId={{$randomInt}}",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"evaluation"
+					],
+					"query": [
+						{
+							"key": "taskType",
+							"value": "MANAGERS",
+							"disabled": true
+						},
+						{
+							"key": "taskType",
+							"value": "FINAL_PROJECT",
+							"disabled": true
+						},
+						{
+							"key": "taskType",
+							"value": "DAILY_TASK",
+							"disabled": true
+						},
+						{
+							"key": "taskType",
+							"value": "MID_PROJECT",
+							"disabled": true
+						},
+						{
+							"key": "taskType",
+							"value": "{{taskType}}"
+						},
+						{
+							"key": "batchId",
+							"value": "{{$randomInt}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate_score_false",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"boolean\", false);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Authorization}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ems_url}}/final-score/{{selectedBatchId}}?recalculate={{boolean}}",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"final-score",
+						"{{selectedBatchId}}"
+					],
+					"query": [
+						{
+							"key": "recalculate",
+							"value": "{{boolean}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate_score_true",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"boolean\", true);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Authorization}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ems_url}}/final-score/{{selectedBatchId}}?recalculate={{boolean}}",
+					"host": [
+						"{{ems_url}}"
+					],
+					"path": [
+						"final-score",
+						"{{selectedBatchId}}"
+					],
+					"query": [
+						{
+							"key": "recalculate",
+							"value": "{{boolean}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
